@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #1f1b24;
+  font-family: "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background-color: black;
+  padding: 40px 20px;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  position: relative;
+}
+
+.lace-area img {
+  width: 100%;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  margin: 0;
+}
+
+h1 {
+  color: #caa6f5;
+  margin-bottom: 20px;
+}
+
+.choice-button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color: #444;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.choice-button:hover {
+  background-color: #666;
+}
+
+.choice-button.selected {
+  background-color: #7a67a5;
+}
+
+#next-button, #restart-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #5a4b7f;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#next-button:disabled {
+  background-color: #333;
+  cursor: default;
+}
+
+#result-area {
+  margin-top: 20px;
+}
+
+#share-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #1da1f2;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#share-button:hover {
+  background-color: #0d95e8;
+}
