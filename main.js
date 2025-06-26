@@ -119,7 +119,7 @@ const shareButton = document.getElementById("share-button");
 
 shareButton.addEventListener("click", () => {
   const text = `${resultTitle.textContent}\n${resultDescription.textContent}\n#気分診断 #今日はどの自分`;
-  const url = encodeURIComponent("https://あなたのサイトURL"); // 公開URLに差し替えてね
+  const url = encodeURIComponent("https://hanawebdesign.github.io/Hana-shindan/"); // 公開URLに差し替えてね
   const tweet = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${url}`;
   window.open(tweet, "_blank");
 });
