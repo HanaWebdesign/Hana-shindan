@@ -1,125 +1,60 @@
-const questions = [
-  {
-    text: "今日の気分に一番近いのは？",
-    choices: [
-      { text: "何もしたくない", type: "しんだ目" },
-      { text: "刺激がほしい", type: "暴走気味" },
-      { text: "穏やかに過ごしたい", type: "おっとり" }
-    ]
-  },
-  {
-    text: "空を見たら何を感じる？",
-    choices: [
-      { text: "無", type: "しんだ目" },
-      { text: "自由になりたい", type: "繊細" },
-      { text: "わぁ！きれい！", type: "元気っ子" }
-    ]
-  },
-  {
-    text: "話しかけられたら？",
-    choices: [
-      { text: "疲れる…", type: "しんだ目" },
-      { text: "内容次第", type: "クール" },
-      { text: "うれしい！", type: "甘えんぼ" }
-    ]
-  }
+const cards = document.querySelectorAll('.card');
+const results = [
+  '大吉: 今日は最高の日！',
+  '中吉: 良いことが待っているよ。',
+  '小吉: 少し頑張れば良いことがあるかも。',
+  '凶: 今日の運はちょっと低め。気をつけて！'
 ];
 
-const results = {
-  "しんだ目": "やる気が出ない日。でもそんな日も大事。",
-  "暴走気味": "ちょっとテンション上がりすぎ？楽しいけど注意！",
-  "おっとり": "ゆったり穏やかなあなた。癒し系。",
-  "繊細": "心がガラスのよう。でも感受性は宝物。",
-  "元気っ子": "エネルギーがあふれてる！周りも元気になるよ。",
-  "甘えんぼ": "誰かにかまってほしい日。優しさに包まれて。",
-  "クール": "感情はあるけど出さない。大人なあなた。"
-};
+const instructionText = document.getElementById('instruction');
+const resetButton = document.getElementById('resetButton');
+const title = document.getElementById('title');
+const tweetButton = document.getElementById('tweetButton');
+let currentResult = '';
 
-let currentQuestionIndex = 0;
-let selectedType = null;
-const answerCounts = {};
+cards.forEach((card) => {
+  card.addEventListener('click', () => {
+    if (card.classList.contains('clicked')) return;
 
-const questionText = document.getElementById("question-text");
-const choicesContainer = document.getElementById("choices");
-const nextButton = document.getElementById("next-button");
-const resultArea = document.getElementById("result-area");
-const resultTitle = document.getElementById("result-title");
-const resultDescription = document.getElementById("result-description");
-const restartButton = document.getElementById("restart-button");
+    instructionText.style.display = 'none';
+    title.style.display = 'none';
 
-function renderQuestion() {
-  const question = questions[currentQuestionIndex];
-  questionText.textContent = question.text;
-  choicesContainer.innerHTML = "";
+    const randomResult = results[Math.floor(Math.random() * results.length)];
+    currentResult = randomResult;
+    const resultElement = card.querySelector('.card-back p');
+    resultElement.textContent = randomResult;
 
-  question.choices.forEach((choice) => {
-    const button = document.createElement("button");
-    button.textContent = choice.text;
-    button.className = "choice-button";
+    card.querySelector('.card-inner').style.transform = 'rotateY(180deg)';
 
-    button.addEventListener("click", () => {
-      selectedType = choice.type;
-      nextButton.disabled = false;
-
-      // 選択表示の切り替え
-      document.querySelectorAll(".choice-button").forEach(btn => {
-        btn.classList.remove("selected");
-      });
-      button.classList.add("selected");
+    cards.forEach((otherCard) => {
+      if (otherCard !== card) {
+        otherCard.classList.add('hidden');
+      }
     });
 
-    choicesContainer.appendChild(button);
+    card.classList.add('center');
+    card.classList.add('clicked');
+
+    resetButton.style.display = 'inline-block';
+    tweetButton.style.display = 'inline-block';
   });
-}
-
-nextButton.addEventListener("click", () => {
-  if (selectedType) {
-    if (!answerCounts[selectedType]) {
-      answerCounts[selectedType] = 0;
-    }
-    answerCounts[selectedType]++;
-  }
-
-  currentQuestionIndex++;
-  selectedType = null;
-  nextButton.disabled = true;
-
-  if (currentQuestionIndex < questions.length) {
-    renderQuestion();
-  } else {
-    showResult();
-  }
 });
 
-restartButton.addEventListener("click", () => {
-  currentQuestionIndex = 0;
-  selectedType = null;
-  for (let key in answerCounts) delete answerCounts[key];
-  resultArea.style.display = "none";
-  questionText.style.display = "block";
-  choicesContainer.style.display = "block";
-  nextButton.style.display = "inline-block";
-  renderQuestion();
+resetButton.addEventListener('click', () => {
+  cards.forEach((card) => {
+    card.classList.remove('hidden', 'clicked', 'center');
+    card.querySelector('.card-inner').style.transform = 'rotateY(0deg)';
+    card.querySelector('.card-back p').textContent = '結果がここに表示されます';
+  });
+
+  instructionText.style.display = 'block';
+  title.style.display = 'block';
+  resetButton.style.display = 'none';
+  tweetButton.style.display = 'none';
 });
 
-function showResult() {
-  const max = Object.entries(answerCounts).reduce((a, b) => (a[1] > b[1] ? a : b));
-  resultTitle.textContent = `あなたは「${max[0]}」タイプ`;
-  resultDescription.textContent = results[max[0]];
-  resultArea.style.display = "block";
-  questionText.style.display = "none";
-  choicesContainer.style.display = "none";
-  nextButton.style.display = "none";
-}
-
-// 初期化
-renderQuestion();
-
-const shareButton = document.getElementById("share-button");
-
-shareButton.addEventListener("click", () => {
-  const text = `${resultTitle.textContent}\n${resultDescription.textContent}\n#気分診断 #今日はどの自分`;
-  const url = encodeURIComponent("https://あなたのサイトURL"); // 公開URLに差し替えてね
-  const tweet = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${url}`;
-  window.open(tweet, "_blank");
+tweetButton.addEventListener('click', () => {
+  const text = encodeURIComponent(`今日のわんわんおみくじの結果は…「${currentResult}」🐾 #わんわんおみくじ`);
+  const url = `https://twitter.com/intent/tweet?text=${text}`;
+  window.open(url, '_blank');
 });

@@ -1,25 +1,50 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>今日はどの自分？気分診断</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>わんわんおみくじ</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h1 id="title">わんわんおみくじ</h1>
   <div class="container">
-
-    <h1>今日はどの自分？気分診断</h1>
-    <p id="question-text">質問がここに表示されます</p>
-    <div id="choices"></div>
-    <button id="next-button" disabled>次へ</button>
-
-    <div id="result-area" style="display: none;">
-      <h2 id="result-title">診断結果</h2>
-      <p id="result-description">説明がここに入ります</p>
-      <button id="restart-button">もう一回やる</button>
-      <button id="share-button">Xに投稿する</button>
+    <p id="instruction">一枚選んでね</p> <!-- ここにテキストを追加 -->
+   <div class="cards">
+  <div class="card" id="card1">
+    <div class="card-inner">
+      <div class="card-front">
+        <img src="./images/toranpu.png" alt="カード1" class="card-image">
+      </div>
+      <div class="card-back">
+        <p id="result1">結果がここに表示されます</p>
+      </div>
     </div>
+  </div>
+  <div class="card" id="card2">
+    <div class="card-inner">
+      <div class="card-front">
+        <img src="./images/toranpu.png" alt="カード2" class="card-image">
+      </div>
+      <div class="card-back">
+        <p id="result2">結果がここに表示されます</p>
+      </div>
+    </div>
+  </div>
+  <div class="card" id="card3">
+    <div class="card-inner">
+      <div class="card-front">
+        <img src="./images/toranpu.png" alt="カード3" class="card-image">
+      </div>
+      <div class="card-back">
+        <p id="result3">結果がここに表示されます</p>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+    <button id="resetButton" style="display: none;">戻る</button> <!-- 戻るボタンを追加 -->
+      <button id="tweetButton" style="display: none;">Xで共有</button>
   </div>
 
   <script src="main.js"></script>
